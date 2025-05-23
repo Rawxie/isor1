@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "user": {
+      "name": "Alex Kim",
+      "avatar": "/gallery/1.jpeg"
+    },
+    "type": "creation",
+    "image": "/gallery/2.jpeg",
+    "caption": "Exploring ancient temples with AI isometric art!",
+    "tags": [
+      "#isometric",
+      "#aiart",
+      "#temple"
+    ],
+    "likes": 24,
+    "liked": false,
+    "comments": [
+      {
+        "user": "Priya",
+        "text": "Love this!"
+      },
+      {
+        "user": "Sara",
+        "text": "Amazing work."
+      },
+      {
+        "user": "You",
+        "text": "Great!!!"
+      }
+    ],
+    "shares": 3,
+    "timestamp": "2h ago"
+  },
+  {
+    "id": 2,
+    "user": {
+      "name": "Priya Singh",
+      "avatar": "/gallery/3.jpeg"
+    },
+    "type": "blog",
+    "title": "How I Use IsoR-1 for Cultural Storytelling",
+    "content": "IsoR-1 lets me bring history to life with just a prompt. Here's how I use it for my digital art projects...",
+    "excerpt": "IsoR-1 lets me bring history to life with just a prompt. Here's how I use it for my digital art projects...",
+    "tags": [
+      "#blog",
+      "#storytelling"
+    ],
+    "likes": 13,
+    "liked": true,
+    "comments": [
+      {
+        "user": "Alex",
+        "text": "Great insights!"
+      }
+    ],
+    "shares": 1,
+    "timestamp": "5h ago"
+  },
+  {
+    "user": {
+      "name": "You",
+      "avatar": "/gallery/1.jpeg"
+    },
+    "type": "creation",
+    "image": "/uploads/1747980263319-785108821-lake.png",
+    "caption": "Lake ",
+    "tags": [
+      "#Lakee"
+    ],
+    "likes": 1,
+    "liked": true,
+    "comments": [
+      {
+        "user": "You",
+        "text": "My first creation"
+      }
+    ],
+    "shares": 0,
+    "timestamp": "now",
+    "id": 1747980269815
+  }
+]
