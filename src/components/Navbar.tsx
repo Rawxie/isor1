@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useSession, signOut } from 'next-auth/react';
 
 const menuItems = [
   { name: 'Home', href: '/' },
@@ -13,12 +14,13 @@ const menuItems = [
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { data: session } = useSession();
 
-  if (typeof window !== 'undefined') {
-    window.addEventListener('scroll', () => {
-      setIsScrolled(window.scrollY > 20);
-    });
-  }
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <motion.nav
@@ -46,6 +48,18 @@ export default function Navbar() {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-navy-800 transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
+              {!session && (
+                <>
+                  <Link href="/login" className="text-navy-700 hover:text-navy-900 font-sans">Login</Link>
+                  <Link href="/signup" className="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800 transition font-semibold ml-2">Sign Up</Link>
+                </>
+              )}
+              {session && (
+                <>
+                  <Link href="/account" className="text-navy-700 hover:text-navy-900 font-sans">Account</Link>
+                  <button onClick={() => signOut({ callbackUrl: '/login' })} className="ml-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition font-semibold">Sign Out</button>
+                </>
+              )}
             </div>
           </div>
         </div>

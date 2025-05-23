@@ -1,6 +1,8 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { formatDistanceToNow } from "date-fns";
+import { useSession } from "next-auth/react";
 
 const defaultAvatar = "/gallery/1.jpeg";
 
@@ -17,6 +19,7 @@ export default function CommunityPage() {
   const [blogPreview, setBlogPreview] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const blogFileInputRef = useRef<HTMLInputElement>(null);
+  const { data: session } = useSession();
 
   // Fetch posts from backend
   useEffect(() => {
@@ -94,7 +97,10 @@ export default function CommunityPage() {
     e.preventDefault();
     if (!newPost.caption.trim()) return;
     const post = {
-      user: { name: "You", avatar: defaultAvatar },
+      user: {
+        username: (session?.user as any)?.username || "anonymous",
+        avatar: (session?.user as any)?.avatar || defaultAvatar,
+      },
       type: "creation",
       image: newPost.image,
       caption: newPost.caption,
@@ -118,7 +124,10 @@ export default function CommunityPage() {
     e.preventDefault();
     if (!newBlog.title.trim() || !newBlog.content.trim()) return;
     const post = {
-      user: { name: "You", avatar: defaultAvatar },
+      user: {
+        username: (session?.user as any)?.username || "anonymous",
+        avatar: (session?.user as any)?.avatar || defaultAvatar,
+      },
       type: "blog",
       title: newBlog.title,
       content: newBlog.content,
@@ -137,6 +146,17 @@ export default function CommunityPage() {
     setNewBlog({ title: "", content: "", image: "", tags: "" });
     setBlogPreview("");
     if (blogFileInputRef.current) blogFileInputRef.current.value = "";
+  };
+
+  // Delete post
+  const handleDelete = async (id: number) => {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
+    await fetch("/api/posts", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    setPosts(posts => posts.filter(p => p.id !== id));
   };
 
   return (
@@ -252,10 +272,14 @@ export default function CommunityPage() {
               {/* User Info */}
               <div className="flex-shrink-0 flex flex-col items-center md:items-start w-24">
                 <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-navy-200 mb-2">
-                  <Image src={post.user.avatar || defaultAvatar} alt={post.user.name} fill className="object-cover" />
+                  <Image src={post.user.avatar || defaultAvatar} alt={post.user?.username || post.user?.name || "Unknown"} fill className="object-cover" />
                 </div>
-                <span className="text-navy-700 font-bold text-sm">{post.user.name}</span>
-                <span className="text-navy-500 text-xs">{post.timestamp}</span>
+                <span className="text-navy-700 font-bold text-sm">
+                  {post.user?.username || post.user?.name || "Unknown"}
+                </span>
+                <span className="text-navy-500 text-xs">
+                  {post.createdAt ? formatDistanceToNow(new Date(post.createdAt), { addSuffix: true }) : post.timestamp}
+                </span>
               </div>
               {/* Post Content */}
               <div className="flex-1">
@@ -294,6 +318,11 @@ export default function CommunityPage() {
                   <button onClick={() => handleShare(post.id)} className="flex items-center gap-1 text-navy-700 hover:text-navy-900 font-bold">
                     <span>🔗</span> {post.shares}
                   </button>
+                  {(session?.user as any)?.username === post.user.username && (
+                    <button onClick={() => handleDelete(post.id)} className="flex items-center gap-1 text-red-600 hover:text-red-800 font-bold ml-auto">
+                      <span>🗑️</span> Delete
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

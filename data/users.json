@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "email": "test@example.com",
+    "password": "test1234",
+    "name": "Test User",
+    "username": "testuser",
+    "bio": "This is a test user.",
+    "location": "",
+    "website": "",
+    "avatar": "",
+    "dateJoined": "2024-06-10"
+  },
+  {
+    "id": "e2780ebd-3269-4278-b817-2cd08d7f0e9c",
+    "name": "Harshil Parikh",
+    "email": "harshilparikhh@gmail.com",
+    "password": "Harshil@3344",
+    "username": "harshilparikhh",
+    "bio": "",
+    "location": "",
+    "website": "",
+    "avatar": "",
+    "dateJoined": "2024-06-10"
+  },
+  {
+    "id": "fc62f9f0-7f52-4a4e-a5fc-ccc107818bf9",
+    "name": "Rawxie",
+    "email": "test@test.com",
+    "password": "admin123",
+    "username": "rawxie",
+    "bio": "",
+    "location": "",
+    "website": "",
+    "avatar": "",
+    "dateJoined": "2024-06-10"
+  },
+  {
+    "id": "32019ef5-63c8-4afa-978b-49ad9346613f",
+    "name": "Harshil",
+    "email": "test1@test.com",
+    "password": "test",
+    "username": "harshil",
+    "bio": "",
+    "location": "",
+    "website": "",
+    "avatar": "",
+    "dateJoined": "2024-06-10"
+  }
+]

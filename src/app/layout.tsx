@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Providers from '../components/Providers';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -17,8 +18,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'IsoR-1 - AI-Powered Isometric 3D Image Generator',
-  description: 'Harnessing Artificial Intelligence Tools for 3D Isometric Images Generator',
+  title: 'IsO3',
+  description: 'IsO3 - Your Creative Community',
 };
 
 export default function RootLayout({
@@ -29,13 +30,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} ${playfair.variable} font-sans bg-gray-900 text-white antialiased`}>
-        <Navbar />
-        <div className="min-h-screen flex flex-col justify-between">
-          <div className="flex-1">
-            {children}
+        <Providers>
+          <Navbar />
+          <div className="min-h-screen flex flex-col justify-between">
+            <div className="flex-1">
+              {children}
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
+        </Providers>
       </body>
     </html>
   );

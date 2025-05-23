@@ -1,38 +1,5 @@
 [
   {
-    "id": 1,
-    "user": {
-      "name": "Alex Kim",
-      "avatar": "/gallery/1.jpeg"
-    },
-    "type": "creation",
-    "image": "/gallery/2.jpeg",
-    "caption": "Exploring ancient temples with AI isometric art!",
-    "tags": [
-      "#isometric",
-      "#aiart",
-      "#temple"
-    ],
-    "likes": 24,
-    "liked": false,
-    "comments": [
-      {
-        "user": "Priya",
-        "text": "Love this!"
-      },
-      {
-        "user": "Sara",
-        "text": "Amazing work."
-      },
-      {
-        "user": "You",
-        "text": "Great!!!"
-      }
-    ],
-    "shares": 3,
-    "timestamp": "2h ago"
-  },
-  {
     "id": 2,
     "user": {
       "name": "Priya Singh",
@@ -79,5 +46,50 @@
     "shares": 0,
     "timestamp": "now",
     "id": 1747980269815
+  },
+  {
+    "user": {
+      "username": "anonymous",
+      "avatar": "/gallery/1.jpeg"
+    },
+    "type": "creation",
+    "image": "/uploads/1747983844778-869319703-3d_japan's_window.png",
+    "caption": "Japan window",
+    "tags": [
+      "#japan"
+    ],
+    "likes": 1,
+    "liked": true,
+    "comments": [
+      {
+        "user": "You",
+        "text": "great"
+      }
+    ],
+    "shares": 0,
+    "timestamp": "now",
+    "id": 1747983851986,
+    "createdAt": "2025-05-23T07:04:11.986Z"
+  },
+  {
+    "user": {
+      "username": "anonymous",
+      "avatar": "/gallery/1.jpeg"
+    },
+    "type": "blog",
+    "title": "test title",
+    "content": "bdahdg ihasgfdihasghdihjadsg hkasdgdfjklhadsgdihagidhaghkdhaskhdgaiuhdgasiudg asiuhdgaiuhsgdiahsgdialhsgdiuasgdiuyasgdiuyasgdiyasgdiasgdiasgdihasg diuyas gioyasg diyuasg diyasgdiyasg dyiasgdiyasg d iyas gdiyas gdiyas gdiyas gdaiy",
+    "excerpt": "bdahdg ihasgfdihasghdihjadsg hkasdgdfjklhadsgdihagidhaghkdhaskhdgaiuhdgasiudg asiuhdgaiuhsgdiahsgdia...",
+    "image": "",
+    "tags": [
+      "#test"
+    ],
+    "likes": 0,
+    "liked": false,
+    "comments": [],
+    "shares": 0,
+    "timestamp": "now",
+    "id": 1747983906410,
+    "createdAt": "2025-05-23T07:05:06.410Z"
   }
 ]

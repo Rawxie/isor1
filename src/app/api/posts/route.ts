@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 const postsFile = path.join(process.cwd(), 'data', 'posts.json');
 
@@ -27,6 +29,7 @@ if (!fs.existsSync(postsFile)) {
       ],
       shares: 2,
       timestamp: "2h ago",
+      createdAt: new Date().toISOString(),
     },
     {
       id: 2,
@@ -43,6 +46,7 @@ if (!fs.existsSync(postsFile)) {
       ],
       shares: 1,
       timestamp: "5h ago",
+      createdAt: new Date().toISOString(),
     },
   ];
   fs.writeFileSync(postsFile, JSON.stringify(samplePosts, null, 2));
@@ -63,6 +67,7 @@ export async function POST(request: Request) {
     const posts = JSON.parse(fs.readFileSync(postsFile, 'utf8'));
     const newPost = await request.json();
     newPost.id = Date.now();
+    newPost.createdAt = new Date().toISOString();
     posts.push(newPost);
     fs.writeFileSync(postsFile, JSON.stringify(posts, null, 2));
     return NextResponse.json(newPost, { status: 201 });
@@ -86,5 +91,35 @@ export async function PATCH(request: Request) {
   } catch (error) {
     console.error('Error updating post:', error);
     return NextResponse.json({ error: 'Failed to update post' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { id } = await request.json();
+    let posts = JSON.parse(fs.readFileSync(postsFile, 'utf8'));
+    const post = posts.find((p: any) => p.id === id);
+    
+    if (!post) {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+    }
+
+    // Check if the user owns this post
+    const currentUsername = (session.user as any).username;
+    if (!currentUsername || post.user.username !== currentUsername) {
+      return NextResponse.json({ error: 'Unauthorized - can only delete your own posts' }, { status: 403 });
+    }
+
+    posts = posts.filter((p: any) => p.id !== id);
+    fs.writeFileSync(postsFile, JSON.stringify(posts, null, 2));
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 });
   }
 } 
