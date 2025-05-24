@@ -1,4 +1,5 @@
-import { AuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { readFile } from "fs/promises";
 import path from "path";
@@ -24,8 +25,12 @@ const getUsers = async (): Promise<User[]> => {
   return JSON.parse(data);
 };
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -49,13 +54,13 @@ export const authOptions: AuthOptions = {
     strategy: "jwt" as const,
   },
   pages: {
-    signIn: "/login",
+    signIn: "/auth/signin",
   },
   secret: process.env.NEXTAUTH_SECRET || "devsecret",
   callbacks: {
     async session({ session, token }: { session: Session; token: JWT }) {
       if (session.user && token) {
-        (session.user as any).id = token.id;
+        (session.user as any).id = token.sub || token.id;
         (session.user as any).username = token.username;
       }
       return session;
