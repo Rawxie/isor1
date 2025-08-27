@@ -30,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
+      <body className={`${inter.variable} ${playfair.variable} font-sans bg-gray-900 text-white antialiased`}>
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-9YV27FH107"
@@ -44,8 +44,6 @@ export default function RootLayout({
             gtag('config', 'G-9YV27FH107');
           `}
         </Script>
-      </head>
-      <body className={`${inter.variable} ${playfair.variable} font-sans bg-gray-900 text-white antialiased`}>
         <Providers>
           <Navbar />
           <div className="min-h-screen flex flex-col justify-between">
